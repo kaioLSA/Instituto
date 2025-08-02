@@ -5,11 +5,19 @@ const ChatAgent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
   const [messages, setMessages] = useState([
-    { text: "No que eu poderia te ajudar?", sender: "ai" }
+    { text: "Olá! Sou um assistente da K-Sec, especializado em Agentes de IA. Estou aqui para ajudar com dúvidas sobre a empresa ou como poderiamos te ajudar.", sender: "ai" }
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+
+  // Define sessionId único por usuário
+  useEffect(() => {
+    if (!localStorage.getItem("sessionId")) {
+      localStorage.setItem("sessionId", crypto.randomUUID());
+    }
+  }, []);
+  const sessionId = localStorage.getItem("sessionId");
 
   useEffect(() => {
     if (isOpen) {
@@ -47,7 +55,8 @@ const ChatAgent = () => {
         },
         body: JSON.stringify({
           chatInput: message,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          sessionId: sessionId // <-- ESSA É A CORREÇÃO PRINCIPAL
         }),
       });
 
@@ -60,23 +69,17 @@ const ChatAgent = () => {
       }
 
       const data = await response.json();
-      
-      // Tratamento específico para o formato da resposta
+
       if (data.output) {
-        return data.output; // Retorna diretamente o conteúdo de output
-      } 
-      // Se for string, remove colchetes
-      else if (typeof data === 'string') {
+        return data.output;
+      } else if (typeof data === 'string') {
         return data.replace(/^\[|\]$/g, '');
-      }
-      // Se for objeto, converte para string e remove colchetes
-      else if (typeof data === 'object') {
+      } else if (typeof data === 'object') {
         const jsonString = JSON.stringify(data);
         return jsonString.replace(/^\[|\]$/g, '');
       }
-      
-      return "Não entendi sua pergunta.";
 
+      return "Não entendi sua pergunta.";
     } catch (error) {
       console.error('API Error:', error);
       return `⚠️ ${error.message}`;
@@ -106,9 +109,9 @@ const ChatAgent = () => {
       setMessages(prev => {
         const newMessages = [...prev];
         newMessages.pop();
-        return [...newMessages, { 
-          text: "Falha na comunicação. Por favor, tente novamente.", 
-          sender: "ai" 
+        return [...newMessages, {
+          text: "Falha na comunicação. Por favor, tente novamente.",
+          sender: "ai"
         }];
       });
     }
@@ -130,10 +133,10 @@ const ChatAgent = () => {
           pointerEvents: isButtonVisible && !isOpen ? 'auto' : 'none'
         }}
       >
-        <img 
-          src={brainwaveSymbol} 
-          alt="Chat Agent" 
-          className="w-5 h-5" 
+        <img
+          src={brainwaveSymbol}
+          alt="Chat Agent"
+          className="w-5 h-5"
         />
       </button>
 
@@ -148,14 +151,14 @@ const ChatAgent = () => {
       >
         <div className="bg-n-7 p-4 flex items-center justify-between">
           <div className="flex items-center">
-            <img 
-              src={brainwaveSymbol} 
-              alt="AI Assistant" 
-              className="w-5 h-5 mr-2" 
+            <img
+              src={brainwaveSymbol}
+              alt="AI Assistant"
+              className="w-5 h-5 mr-2"
             />
             <span className="font-bold text-white text-sm">Assistente Virtual</span>
           </div>
-          <button 
+          <button
             onClick={toggleChat}
             className="text-gray-400 hover:text-white text-xl"
           >
@@ -166,14 +169,14 @@ const ChatAgent = () => {
         {/* Messages area */}
         <div className="flex-1 p-4 overflow-y-auto">
           {messages.map((msg, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className={`mb-3 flex ${msg.sender === 'ai' ? 'justify-start' : 'justify-end'}`}
             >
-              <div 
+              <div
                 className={`max-w-xs p-2 rounded-lg text-sm ${
-                  msg.sender === 'ai' 
-                    ? 'bg-n-6 text-white rounded-bl-none' 
+                  msg.sender === 'ai'
+                    ? 'bg-n-6 text-white rounded-bl-none'
                     : 'bg-purple-500 text-white rounded-br-none'
                 }`}
               >
@@ -191,10 +194,10 @@ const ChatAgent = () => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Digite sua mensagem..."
-              className="flex-1 bg-n-7 text-white rounded-l-lg px-3 py-1 text-sm focus:outline-none"
+              className="flex-1 bg-n-7 text-white rounded-l-lg px-3 py-1 text-base focus:outline-none"
               disabled={isLoading}
             />
-            <button 
+            <button
               type="submit"
               className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-r-lg text-sm disabled:opacity-50"
               disabled={isLoading || !inputValue.trim()}

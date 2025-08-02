@@ -4,13 +4,23 @@ import Section from "./Section";
 import { BackgroundCircles, BottomLine, Gradient } from "./design/Hero";
 import { heroIcons } from "../constants";
 import { ScrollParallax } from "react-just-parallax";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Generating from "./Generating";
 import Notification from "./Notification";
 import CompanyLogos from "./CompanyLogos";
 
 const Hero = () => {
   const parallaxRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Ativa a animação após o componente montar
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 50);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   // Função de easing para animação suave
   const easeInOutQuad = (t, b, c, d) => {
@@ -40,8 +50,7 @@ const Hero = () => {
   const handleScrollTo = () => {
     const targetSection = document.getElementById("features");
     if (targetSection) {
-      // Calcula a posição considerando o padding do header se necessário
-      const targetPosition = targetSection.offsetTop - 20; // 80px de margem
+      const targetPosition = targetSection.offsetTop - 20;
       smoothScrollTo(targetPosition);
     }
   };
@@ -54,7 +63,12 @@ const Hero = () => {
       customPaddings
       id="hero"
     >
-      <div className="container relative" ref={parallaxRef}>
+      <div 
+        className={`container relative transition-all duration-700 ease-out ${
+          isLoaded ? "scale-100 opacity-100" : "scale-90 opacity-0"
+        }`} 
+        ref={parallaxRef}
+      >
         <div className="relative z-1 max-w-[62rem] mx-auto text-center mb-[3.875rem] md:mb-20 lg:mb-[6.25rem]">
           <h1 className="h1 mb-6">
             Explore as possibilidades de agentes de IA junto com a {` `}

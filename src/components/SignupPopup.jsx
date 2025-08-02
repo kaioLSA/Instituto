@@ -71,7 +71,7 @@ const SignupPopup = ({ isOpen, onClose }) => {
                 alt="brainwave"
                 className="mr-4"
               />
-              <span className="text-white text-xl md:text-2xl font-bold">Brainwave</span>
+              <span className="text-white text-xl md:text-2xl font-bold">-&nbsp;&nbsp;&nbsp;Sec</span>
             </div>
           </div>
         )}

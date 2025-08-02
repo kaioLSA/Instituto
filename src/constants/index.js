@@ -40,7 +40,7 @@ import {
 export const navigation = [
   {
     id: "0",
-    title: "Features",
+    title: "Recursos",
     url: "#features",
     onClick: (e) => {
       e.preventDefault();
@@ -49,7 +49,7 @@ export const navigation = [
   },
   {
     id: "1",
-    title: "How to use",
+    title: "Como Usar",
     url: "#how-to-use",
     onClick: (e) => {
       e.preventDefault();
@@ -58,7 +58,7 @@ export const navigation = [
   },
   {
     id: "2",
-    title: "Pricing",
+    title: "Planos",
     url: "#pricing",
     onClick: (e) => {
       e.preventDefault();
@@ -67,7 +67,7 @@ export const navigation = [
   },
   {
     id: "3",
-    title: "Roadmap",
+    title: "Futuro",
     url: "#roadmap",
     onClick: (e) => {
       e.preventDefault();
