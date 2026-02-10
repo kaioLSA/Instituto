@@ -26,3 +26,7 @@ dist-ssr
 *.mov 
 /public/*.mp4 
 /public/*.mov 
+*.mp4
+*.mov
+public/*.mp4
+public/*.mov
