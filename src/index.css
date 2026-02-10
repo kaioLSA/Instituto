@@ -13,15 +13,96 @@
   color-scheme: dark;
 }
 
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: visible;
+  position: relative;
+}
+
+.page-bg{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(900px 420px at 50% 0%, rgba(139,92,246,.18), transparent 60%),
+    radial-gradient(700px 360px at 15% 30%, rgba(0,170,255,.12), transparent 60%),
+    radial-gradient(700px 360px at 85% 35%, rgba(255,120,0,.10), transparent 60%),
+    #000;
+}
+
+
 * {
   scroll-behavior: smooth
 }
 
 @layer base {
   body {
-    @apply font-sans bg-n-8 text-n-1 text-base;
+    @apply font-sans text-n-1 text-base;
+    background:
+      radial-gradient(1200px 450px at 50% -200px, rgba(139,92,246,0.10), transparent 60%),
+      radial-gradient(900px 380px at 15% 20%, rgba(0,170,255,0.06), transparent 60%),
+      #000;
   }
 }
+
+/* ================= ARC TRANSITION ================= */
+.arc-transition {
+  --p: 0;
+  position: relative;
+  z-index: 80; /* acima da seção de cima */
+  height: 0;   /* não empurra layout */
+}
+
+.arc-transition::before {
+  content: "";
+  position: absolute;
+
+  left: 50%;
+  bottom: 0;
+
+  width: 170vw;
+  height: 85vh;
+
+  transform: translateX(-50%)
+    translateY(calc(60% - (60% * var(--p))))
+    scale(calc(0.18 + (3.25 * var(--p))));
+
+  transform-origin: 50% 100%;
+  will-change: transform;
+
+  /* formato do arco */
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+
+  /* ⚠️ IMPORTANTE:
+     isso precisa ser IGUAL ao fundo da seção de baixo (Services).
+     No Brainwave geralmente é #0e0c15 / n-8 etc.
+     Se sua seção de baixo é "bg-n-8", você pode deixar mais escuro aqui.
+  */
+  background:
+    radial-gradient(1100px 520px at 50% 0%,
+      rgba(139, 92, 246, 0.22),
+      transparent 60%
+    ),
+    #000;
+
+  box-shadow: 0 -30px 120px rgba(0, 0, 0, 0.55);
+
+  opacity: calc(0.05 + (0.95 * var(--p)));
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .arc-transition::before {
+    width: 200vw;
+    height: 70vh;
+  }
+}
+
+
 
 .rotate-45 {
   @apply rotate-[45deg]

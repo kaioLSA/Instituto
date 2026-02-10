@@ -1,33 +1,29 @@
-import ButtonGradient from "./assets/svg/ButtonGradient";
-import Benefits from "./components/Benefits";
-import Collaboration from "./components/Collaboration";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Popup from "./components/Popup";
-import Pricing from "./components/Pricing";
-import Roadmap from "./components/Roadmap";
-import Services from "./components/Services";
-import ChatAgent from "./components/ChatAgent";
+import React from "react";
+import Navbar from "./constants/Navbar";
+import HeroInstituto from "./constants/hero";
+import PilaresInstituto from "./constants/PilaresInstituto";
+import ProgramasStickyScroll from "./constants/ProgramasStickyScroll";
+import AlunosSection from "./constants/AlunosSection";
+import NossoInstituto from "./constants/NossoInstituto";
+import VoluntarioDoacao from "./constants/VoluntarioDoacao";
+import NoticiasEMapa from "./constants/NoticiasEMapa";
+import Colaboradores from "./constants/Colaboradores";
+import Footer from "./constants/Footer";
 
 const App = () => {
   return (
-    <>
-      <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden">
-        <Header />
-        <Hero />
-        <ChatAgent />
-        <Benefits />
-        <Collaboration />
-        <Services />
-        <Popup />
-        <Pricing />
-        <Roadmap />
+    <div className="min-h-screen text-white">
+        <Navbar />
+        <HeroInstituto />
+        <PilaresInstituto />
+        <ProgramasStickyScroll />
+        <AlunosSection />
+        <NossoInstituto />
+        <VoluntarioDoacao />
+        <Colaboradores />
+        <NoticiasEMapa />
         <Footer />
-      </div>
-
-      <ButtonGradient />
-    </>
+    </div>
   );
 };
 
