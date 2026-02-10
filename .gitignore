@@ -22,11 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-*.mp4 
-*.mov 
-/public/*.mp4 
-/public/*.mov 
-*.mp4
-*.mov
-public/*.mp4
-public/*.mov
