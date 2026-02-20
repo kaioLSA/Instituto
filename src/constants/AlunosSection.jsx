@@ -7,7 +7,7 @@ export default function AlunosSection() {
   const [active, setActive] = useState(0);
 
   // ✅ pause por card (clicou no mesmo ativo = pausa/retoma)
-  const [paused, setPaused] = useState([false, true, true, true]); // começa com o 1º pronto pra tocar
+  const [paused, setPaused] = useState([false, true, true]); // agora são 3 cards
 
   // ✅ refs dos vídeos
   const vrefs = useRef([]);
@@ -24,15 +24,9 @@ export default function AlunosSection() {
     pausedRef.current = paused;
   }, [paused]);
 
+  // ✅ agora só Aluno 02, 03 e 04
   const ALUNOS = useMemo(
     () => [
-      {
-        nome: "Aluno 01",
-        tag: "Cultura",
-        desc: "Disciplina, expressão e propósito em cada passo.",
-        srcMov: "/aluno1.mov",
-        srcMp4: "/aluno1.mp4",
-      },
       {
         nome: "Aluno 02",
         tag: "Educação",
@@ -61,8 +55,9 @@ export default function AlunosSection() {
   // ✅ um só tocando, os outros param e VOLTAM pro começo
   const applyActivePlayback = async (nextActive, resetActiveToStart = false) => {
     const pArr = pausedRef.current;
+    const total = ALUNOS.length;
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < total; i++) {
       const v = vrefs.current[i];
       if (!v) continue;
 
@@ -111,11 +106,8 @@ export default function AlunosSection() {
       });
 
       try {
-        if (nextPaused) {
-          v.pause();
-        } else {
-          await v.play();
-        }
+        if (nextPaused) v.pause();
+        else await v.play();
       } catch {}
       return;
     }
@@ -125,7 +117,7 @@ export default function AlunosSection() {
 
     // define: novo ativo tocando, todos os outros pausados
     setPaused(() => {
-      const next = [true, true, true, true];
+      const next = new Array(ALUNOS.length).fill(true);
       next[idx] = false; // ✅ novo ativo toca
       return next;
     });
@@ -368,7 +360,7 @@ export default function AlunosSection() {
           className="nd_grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
+            gridTemplateColumns: "repeat(3, 1fr)", // ✅ agora 3 colunas
             gap: 18,
             marginTop: 22,
           }}
@@ -740,7 +732,8 @@ export default function AlunosSection() {
                 boxShadow: "0 0 0 4px rgba(212,175,55,.12)",
               }}
             />
-            Dica: clicar no mesmo vídeo pausa/retoma. Ao trocar, o anterior volta pro começo.
+            Dica: clicar no mesmo vídeo pausa/retoma. Ao trocar, o anterior volta pro
+            começo.
           </div>
 
           <div
@@ -803,6 +796,7 @@ export default function AlunosSection() {
             50%{ transform: scale(1.25); opacity: .75; }
           }
 
+          /* ✅ com 3 cards fica lindo no desktop; cai pra 2 e depois 1 */
           @media (max-width: 1060px){
             .nd_grid{ grid-template-columns: repeat(2, 1fr) !important; }
           }

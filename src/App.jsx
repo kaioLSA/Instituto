@@ -9,6 +9,7 @@ import VoluntarioDoacao from "./constants/VoluntarioDoacao";
 import NoticiasEMapa from "./constants/NoticiasEMapa";
 import Colaboradores from "./constants/Colaboradores";
 import Footer from "./constants/Footer";
+import TransparenciaRelatorios from "./constants/TransparenciaRelatorios";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <ProgramasStickyScroll />
         <AlunosSection />
         <NossoInstituto />
+        <TransparenciaRelatorios />
         <VoluntarioDoacao />
         <Colaboradores />
         <NoticiasEMapa />
