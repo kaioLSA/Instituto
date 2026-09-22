@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Pasta local com o build pronto do site (gerada a partir do código; não versionar)
+site-instituto-pronto
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
