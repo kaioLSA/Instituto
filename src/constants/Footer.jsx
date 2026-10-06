@@ -109,7 +109,7 @@ export default function Footer() {
             }}
           >
             <FaPhoneAlt style={{ color: "rgba(245,215,110,.95)" }} />
-            <span>1199017-1187</span>
+            <span>5197-0198</span>
           </div>
 
           {/* WHATS */}
@@ -123,7 +123,7 @@ export default function Footer() {
             }}
           >
             <FaWhatsapp style={{ color: "rgba(245,215,110,.95)" }} />
-            <span>95224-1426</span>
+            <span>1199017-1187</span>
           </div>
         </div>
 
